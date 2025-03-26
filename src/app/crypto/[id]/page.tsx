@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 async function getCryptoData(id: string) {
     try {
         const res = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}`);
-        return res.data; // ✅ Axios automatically parses JSON
+        return res.data;
       } catch (error) {
         console.error("Error fetching crypto data:", error);
-        return null; // Return null if there's an error
+        return null;
       }
 }
 

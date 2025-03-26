@@ -1,22 +1,38 @@
-import React from "react";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
-    return (
-      <nav className="bg-gray-900 text-white p-4">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Leesh</h1>
-          <div className="flex space-x-4">
-            <input
-              type="text"
-              placeholder="Search Crypto..."
-              className="px-3 py-1 rounded text-black"
-            />
-            <a href="#" className="hover:text-gray-400">Trade</a>
-            <a href="#" className="hover:text-gray-400">About Us</a>
-            <a href="#" className="hover:text-gray-400">Contact</a>
-            <a href="#" className="hover:text-gray-400">More</a>
-          </div>
-        </div>
-      </nav>
-    );
+  const router = useRouter();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('userEmail');
+    if (storedEmail) {
+      setUserName(storedEmail);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
+    
+    router.push('/');
   };
+
+  return (
+    <nav className="flex justify-between items-center bg-blue-600 text-white p-4">
+      <div className="text-xl font-bold">Crypto Platform</div>
+      <div className="flex items-center space-x-4">
+        <span>Welcome, {userName}</span>
+        <button 
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-700 px-3 py-1 rounded"
+        >
+          Logout
+        </button>
+      </div>
+    </nav>
+  );
+}
