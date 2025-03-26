@@ -6,20 +6,27 @@ import Navbar from "./Components/navbar";
 import CryptoList from "./Components/cryptoList";
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authStage, setAuthStage] = useState<'login' | 'cryptoList'>('login');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
+    
+    if (token) {
+      setAuthStage('cryptoList');
+    }
   }, []);
 
-  if (!isAuthenticated) {
-    return <LoginPage onSuccessfulLogin={() => setIsAuthenticated(true)} />;
+  const handleSuccessfulLogin = () => {
+    setAuthStage('cryptoList');
+  };
+
+  if (authStage === 'login') {
+    return <LoginPage onSuccessfulLogin={handleSuccessfulLogin} />;
   }
 
   return (
     <div className="p-6 max-w-6xl mx-auto text-center">
-      <Navbar />
+      <Navbar onLogout={() => setAuthStage('login')} />
       <CryptoList />
     </div>
   );

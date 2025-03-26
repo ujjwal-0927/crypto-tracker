@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 interface LoginPageProps {
-  onSuccessfulLogin?: () => void;
+  onSuccessfulLogin: () => void;
 }
 
 export default function LoginPage({ onSuccessfulLogin }: LoginPageProps) {
@@ -26,9 +26,11 @@ export default function LoginPage({ onSuccessfulLogin }: LoginPageProps) {
         }
       );
 
+      // Store the token in localStorage
       localStorage.setItem('token', response.data.token);
 
-      onSuccessfulLogin && onSuccessfulLogin();
+      // Call the success callback
+      onSuccessfulLogin();
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
     }
@@ -77,11 +79,6 @@ export default function LoginPage({ onSuccessfulLogin }: LoginPageProps) {
             Sign In
           </button>
         </form>
-        <div className="text-center mt-4 text-sm text-gray-600">
-          Default Credentials:
-          <p>Email: test@crypto.com</p>
-          <p>Password: cryptoplatform123</p>
-        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'your_jwt_secret_key_here';
+const JWT_SECRET = 'mySecretKeyIsASecret';
 
 export function middleware(request: NextRequest) {
   // Get the token from the request headers

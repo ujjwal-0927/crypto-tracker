@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
-export default function Navbar() {
-  const router = useRouter();
+interface NavbarProps {
+  onLogout: () => void;
+}
+
+export default function Navbar({ onLogout }: NavbarProps) {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
@@ -16,16 +18,14 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('userEmail');
-    
-    router.push('/');
+    onLogout();
   };
 
   return (
     <nav className="flex justify-between items-center bg-blue-600 text-white p-4">
       <div className="text-xl font-bold">Crypto Platform</div>
       <div className="flex items-center space-x-4">
-        <span>Welcome, {userName}</span>
+        <span>Welcome, {userName || "User"}</span>
         <button 
           onClick={handleLogout}
           className="bg-red-500 hover:bg-red-700 px-3 py-1 rounded"

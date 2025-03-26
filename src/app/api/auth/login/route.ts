@@ -12,7 +12,7 @@ const MOCK_USERS = [
   }
 ];
 
-const JWT_SECRET = 'your_jwt_secret_key_here';
+const JWT_SECRET = 'mySecretKeyIsASecret';
 
 export async function POST(request: NextRequest) {
   try {
